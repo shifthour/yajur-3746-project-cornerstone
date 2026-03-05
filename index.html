@@ -9,555 +9,655 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-teal': '#4FB8C4',
-                        'brand-dark': '#1a1a1a',
-                        'brand-navy': '#2D3748'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         * { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #4FB8C4 0%, #2D3748 100%); }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(79, 184, 196, 0.1); }
-        .backdrop-blur { backdrop-filter: blur(20px); }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        .modal.show { display: flex; align-items: center; justify-content: center; }
-        .modal-content { background: rgba(26, 26, 26, 0.95); padding: 2rem; border-radius: 1rem; border: 1px solid rgba(79, 184, 196, 0.2); backdrop-filter: blur(20px); max-width: 90%; max-height: 90%; overflow-y: auto; }
+        .glass { backdrop-filter: blur(20px); }
+        .gradient-bg { background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%); }
+        .text-gradient { background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3); }
+        .pulse-glow { animation: pulseGlow 2s infinite; }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+        }
+        .modal-overlay { backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-gray-900 text-white overflow-x-hidden">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur border-b border-brand-teal/20">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-brand-teal rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">PC</span>
-                    </div>
-                    <span class="text-xl font-bold">Project Cornerstone</span>
-                </div>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#overview" class="hover:text-brand-teal transition-colors">Overview</a>
-                    <a href="#metrics" class="hover:text-brand-teal transition-colors">Metrics</a>
-                    <a href="#growth" class="hover:text-brand-teal transition-colors">Growth</a>
-                    <a href="#highlights" class="hover:text-brand-teal transition-colors">Highlights</a>
-                    <a href="#contact" class="hover:text-brand-teal transition-colors">Contact</a>
-                </div>
+    <nav class="fixed top-0 left-0 right-0 z-50 glass bg-gray-900/80 border-b border-white/10">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="text-2xl font-bold text-gradient">Project Cornerstone</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="hover:text-cyan-400 transition-colors cursor-pointer">Overview</a>
+                <a href="#metrics" class="hover:text-cyan-400 transition-colors cursor-pointer">Metrics</a>
+                <a href="#growth" class="hover:text-cyan-400 transition-colors cursor-pointer">Growth</a>
+                <a href="#highlights" class="hover:text-cyan-400 transition-colors cursor-pointer">Highlights</a>
+                <a href="#contact" class="hover:text-cyan-400 transition-colors cursor-pointer">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 gradient-bg">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 opacity-0" id="hero-title">Project Cornerstone</h1>
-            <p class="text-xl md:text-2xl mb-8 opacity-0 max-w-3xl mx-auto" id="hero-subtitle">
-                Commercial Snow Management & Property Maintenance Platform - High-Growth Contract-Based Business
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto opacity-0" id="hero-stats">
-                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
-                    <h3 class="text-3xl font-bold text-brand-teal mb-2" data-counter="31.9">0%</h3>
-                    <p class="text-gray-300">EBITDA Margin (2027E)</p>
+    <section class="min-h-screen flex items-center justify-center relative pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-6xl md:text-8xl font-black mb-6 text-gradient hero-title">Project Cornerstone</h1>
+            <h2 class="text-2xl md:text-4xl font-light mb-8 text-gray-300 hero-subtitle">Commercial Snow Management & Property Maintenance Platform</h2>
+            <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-4xl mx-auto hero-description">High-growth, contract-based platform serving mission-critical sites across GTA corridors with predictable seasonal cash flow and exceptional margin performance</p>
+            
+            <!-- Key Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 hero-stats">
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer stat-card" data-modal="revenue-modal">
+                    <div class="text-3xl font-bold text-gradient revenue-counter">$6.5M</div>
+                    <div class="text-sm text-gray-400">2027E Revenue</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
-                    <h3 class="text-3xl font-bold text-brand-teal mb-2" data-counter="6562020">$0</h3>
-                    <p class="text-gray-300">Revenue (2027E)</p>
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer stat-card" data-modal="growth-modal">
+                    <div class="text-3xl font-bold text-gradient growth-counter">209%</div>
+                    <div class="text-sm text-gray-400">3-Year Growth</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
-                    <h3 class="text-3xl font-bold text-brand-teal mb-2">1-3</h3>
-                    <p class="text-gray-300">Year Contracts</p>
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer stat-card" data-modal="margin-modal">
+                    <div class="text-3xl font-bold text-gradient margin-counter">31.9%</div>
+                    <div class="text-sm text-gray-400">EBITDA Margin</div>
+                </div>
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer stat-card" data-modal="contracts-modal">
+                    <div class="text-3xl font-bold text-gradient">1-3yr</div>
+                    <div class="text-sm text-gray-400">Contract Terms</div>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row gap-4 justify-center opacity-0" id="hero-cta">
-                <button class="bg-brand-teal hover:bg-brand-teal/80 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-                    Request Information
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col md:flex-row gap-4 justify-center hero-cta">
+                <button class="gradient-bg px-8 py-4 rounded-full text-white font-semibold hover:scale-105 transition-transform pulse-glow" id="downloadCIM">
+                    Download Full CIM
                 </button>
-                <button class="border border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-                    Download CIM
+                <button class="border-2 border-cyan-400 px-8 py-4 rounded-full text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-all" id="scheduleCall">
+                    Schedule Call
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- Key Metrics -->
-    <section id="metrics" class="py-20 bg-gray-800">
+    <!-- Overview Section -->
+    <section id="overview" class="py-20 bg-gray-800/50">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16">Key Financial Metrics</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover cursor-pointer" onclick="openModal('revenue2025')">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">$5.55M</h3>
-                    <p class="text-gray-300 mb-1">2025 Revenue</p>
-                    <p class="text-green-400 text-sm">+81.2% YoY</p>
+            <h2 class="text-5xl font-bold text-center mb-16 text-gradient section-title">Company Overview</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 overview-content">
+                    <h3 class="text-3xl font-bold text-white">Market-Leading Snow & Ice Management Platform</h3>
+                    <p class="text-lg text-gray-300 leading-relaxed">A high-growth, contract-based commercial snow and ice management platform serving mission-critical industrial and institutional sites across core GTA corridors under recurring 1–3-year agreements with strong renewal behaviour.</p>
+                    <p class="text-lg text-gray-300 leading-relaxed">Operations are fully self-performed through an owned fleet, disciplined route density, and technology-enabled dispatch and compliance systems. The platform has been institutionalized with standardized SOPs and an embedded leadership team.</p>
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="glass bg-white/5 p-4 rounded-lg border border-white/10 hover-lift cursor-pointer detail-card" data-modal="services-modal">
+                            <h4 class="font-semibold text-cyan-400">Service Areas</h4>
+                            <p class="text-sm text-gray-400">Core GTA Corridors</p>
+                        </div>
+                        <div class="glass bg-white/5 p-4 rounded-lg border border-white/10 hover-lift cursor-pointer detail-card" data-modal="operations-modal">
+                            <h4 class="font-semibold text-cyan-400">Operations Model</h4>
+                            <p class="text-sm text-gray-400">Fully Self-Performed</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover cursor-pointer" onclick="openModal('ebitda2025')">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">$1.75M</h3>
-                    <p class="text-gray-300 mb-1">2025 EBITDA</p>
-                    <p class="text-green-400 text-sm">31.5% Margin</p>
-                </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">209%</h3>
-                    <p class="text-gray-300 mb-1">Revenue CAGR</p>
-                    <p class="text-gray-400 text-sm">2023-2027E</p>
-                </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">GTA</h3>
-                    <p class="text-gray-300 mb-1">Core Markets</p>
-                    <p class="text-gray-400 text-sm">Industrial & Institutional</p>
-                </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">100%</h3>
-                    <p class="text-gray-300 mb-1">Self-Performed</p>
-                    <p class="text-gray-400 text-sm">Owned Fleet Operations</p>
-                </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">Mission-Critical</h3>
-                    <p class="text-gray-300 mb-1">Service Level</p>
-                    <p class="text-gray-400 text-sm">Essential Infrastructure</p>
-                </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">Recurring</h3>
-                    <p class="text-gray-300 mb-1">Revenue Model</p>
-                    <p class="text-gray-400 text-sm">Strong Renewal Behavior</p>
-                </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-6 card-hover">
-                    <h3 class="text-2xl font-bold text-brand-teal mb-2">Scalable</h3>
-                    <p class="text-gray-300 mb-1">Platform</p>
-                    <p class="text-gray-400 text-sm">Standardized SOPs</p>
+                <div class="relative overview-visual">
+                    <div class="glass bg-gradient-to-br from-cyan-500/20 to-blue-500/20 p-8 rounded-2xl border border-white/10">
+                        <canvas id="overviewChart" width="400" height="300"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Company Overview -->
-    <section id="overview" class="py-20 bg-gray-900">
+    <!-- Key Metrics Interactive Section -->
+    <section id="metrics" class="py-20">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-4xl font-bold mb-8">Company Profile</h2>
-                    <p class="text-lg text-gray-300 mb-6">
-                        A high-growth, contract based commercial snow and ice management platform available for acquisition. 
-                        The business services mission-critical industrial and institutional sites across core GTA corridors 
-                        under recurring 1–3-year agreements with strong renewal behaviour, driving highly predictable 
-                        seasonal cash flow and attractive margin performance.
-                    </p>
-                    <p class="text-lg text-gray-300 mb-6">
-                        Operations are fully self-performed through an owned fleet, disciplined route density, and 
-                        technology-enabled dispatch and compliance systems. The platform has been institutionalized 
-                        with standardized SOPs and an embedded leadership team, resulting in minimal owner dependency 
-                        and strong execution during peak winter demand.
-                    </p>
-                    <div class="bg-brand-teal/10 border border-brand-teal/20 rounded-lg p-6">
-                        <h3 class="text-xl font-bold text-brand-teal mb-4">Reason for Divestiture</h3>
-                        <p class="text-gray-300">
-                            The founder is pursuing a new venture and is committed to a structured transition, 
-                            including training and a non-compete.
-                        </p>
-                    </div>
+            <h2 class="text-5xl font-bold text-center mb-16 text-gradient section-title">Key Performance Metrics</h2>
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6 metrics-grid">
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer metric-card" data-modal="revenue-detail-modal">
+                    <div class="text-sm text-gray-400 mb-2">2025 Revenue</div>
+                    <div class="text-3xl font-bold text-gradient revenue-2025">$5.55M</div>
+                    <div class="text-xs text-green-400 mt-2">+81.2% YoY</div>
                 </div>
-                <div class="space-y-6">
-                    <div class="bg-white/5 backdrop-blur rounded-lg p-6">
-                        <h3 class="text-xl font-bold text-brand-teal mb-4">Business Model</h3>
-                        <ul class="text-gray-300 space-y-2">
-                            <li>• Contract-based recurring revenue (1-3 years)</li>
-                            <li>• Mission-critical service positioning</li>
-                            <li>• Self-performing operations model</li>
-                            <li>• Technology-enabled dispatch systems</li>
-                            <li>• Year-round property services expansion</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white/5 backdrop-blur rounded-lg p-6">
-                        <h3 class="text-xl font-bold text-brand-teal mb-4">Market Position</h3>
-                        <ul class="text-gray-300 space-y-2">
-                            <li>• Core GTA corridor coverage</li>
-                            <li>• Industrial & institutional focus</li>
-                            <li>• Disciplined route density</li>
-                            <li>• Strong customer retention</li>
-                            <li>• Consolidation opportunities</li>
-                        </ul>
-                    </div>
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer metric-card" data-modal="ebitda-detail-modal">
+                    <div class="text-sm text-gray-400 mb-2">2025 EBITDA</div>
+                    <div class="text-3xl font-bold text-gradient ebitda-2025">$1.75M</div>
+                    <div class="text-xs text-green-400 mt-2">+82.1% YoY</div>
+                </div>
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer metric-card" data-modal="margin-detail-modal">
+                    <div class="text-sm text-gray-400 mb-2">EBITDA Margin</div>
+                    <div class="text-3xl font-bold text-gradient margin-2025">31.5%</div>
+                    <div class="text-xs text-gray-400 mt-2">Consistent</div>
+                </div>
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer metric-card" data-modal="growth-detail-modal">
+                    <div class="text-sm text-gray-400 mb-2">5-Year CAGR</div>
+                    <div class="text-3xl font-bold text-gradient cagr-value">25.2%</div>
+                    <div class="text-xs text-green-400 mt-2">2023-2027E</div>
+                </div>
+                <div class="glass bg-white/5 p-6 rounded-xl border border-white/10 hover-lift cursor-pointer metric-card" data-modal="projection-modal">
+                    <div class="text-sm text-gray-400 mb-2">2027E EBITDA</div>
+                    <div class="text-3xl font-bold text-gradient ebitda-2027">$2.09M</div>
+                    <div class="text-xs text-cyan-400 mt-2">Projected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Chart Section -->
+    <section id="growth" class="py-20 bg-gray-800/50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-16 text-gradient section-title">Revenue & EBITDA Growth</h2>
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 chart-container">
+                    <h3 class="text-2xl font-bold mb-6 text-white">Revenue Growth Trajectory</h3>
+                    <canvas id="revenueChart" width="400" height="300"></canvas>
+                </div>
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 chart-container">
+                    <h3 class="text-2xl font-bold mb-6 text-white">EBITDA Performance</h3>
+                    <canvas id="ebitdaChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+            
+            <!-- Interactive Data Table -->
+            <div class="mt-12 glass bg-white/5 p-8 rounded-2xl border border-white/10 data-table">
+                <h3 class="text-2xl font-bold mb-6 text-white">Financial Performance Summary</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-600">
+                                <th class="text-left py-3 px-4 text-cyan-400">Year</th>
+                                <th class="text-right py-3 px-4 text-cyan-400">Revenue</th>
+                                <th class="text-right py-3 px-4 text-cyan-400">EBITDA</th>
+                                <th class="text-right py-3 px-4 text-cyan-400">Margin</th>
+                                <th class="text-right py-3 px-4 text-cyan-400">Growth</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body">
+                            <tr class="border-b border-gray-700 hover:bg-white/5 transition-colors cursor-pointer table-row" data-year="2023">
+                                <td class="py-3 px-4 font-semibold">2023</td>
+                                <td class="py-3 px-4 text-right">$2,123,903</td>
+                                <td class="py-3 px-4 text-right">$578,765</td>
+                                <td class="py-3 px-4 text-right">27.3%</td>
+                                <td class="py-3 px-4 text-right">-</td>
+                            </tr>
+                            <tr class="border-b border-gray-700 hover:bg-white/5 transition-colors cursor-pointer table-row" data-year="2024">
+                                <td class="py-3 px-4 font-semibold">2024</td>
+                                <td class="py-3 px-4 text-right">$3,062,839</td>
+                                <td class="py-3 px-4 text-right">$960,486</td>
+                                <td class="py-3 px-4 text-right">31.4%</td>
+                                <td class="py-3 px-4 text-right text-green-400">+44.2%</td>
+                            </tr>
+                            <tr class="border-b border-gray-700 hover:bg-white/5 transition-colors cursor-pointer table-row" data-year="2025">
+                                <td class="py-3 px-4 font-semibold">2025</td>
+                                <td class="py-3 px-4 text-right">$5,549,938</td>
+                                <td class="py-3 px-4 text-right">$1,749,196</td>
+                                <td class="py-3 px-4 text-right">31.5%</td>
+                                <td class="py-3 px-4 text-right text-green-400">+81.2%</td>
+                            </tr>
+                            <tr class="border-b border-gray-700 hover:bg-white/5 transition-colors cursor-pointer table-row" data-year="2026">
+                                <td class="py-3 px-4 font-semibold">2026E</td>
+                                <td class="py-3 px-4 text-right">$6,008,754</td>
+                                <td class="py-3 px-4 text-right">$1,904,775</td>
+                                <td class="py-3 px-4 text-right">31.7%</td>
+                                <td class="py-3 px-4 text-right text-green-400">+8.3%</td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors cursor-pointer table-row" data-year="2027">
+                                <td class="py-3 px-4 font-semibold">2027E</td>
+                                <td class="py-3 px-4 text-right">$6,562,020</td>
+                                <td class="py-3 px-4 text-right">$2,093,284</td>
+                                <td class="py-3 px-4 text-right">31.9%</td>
+                                <td class="py-3 px-4 text-right text-green-400">+9.2%</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Investment Highlights -->
-    <section id="highlights" class="py-20 bg-gray-800">
+    <section id="highlights" class="py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16">Investment Highlights</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white/5 backdrop-blur rounded-lg p-8 card-hover">
-                    <div class="w-16 h-16 bg-brand-teal/20 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-brand-teal text-2xl">📝</span>
+            <h2 class="text-5xl font-bold text-center mb-16 text-gradient section-title">Investment Highlights</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 highlights-grid">
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift cursor-pointer highlight-card" data-modal="contracts-detail-modal">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Contracted, Recurring Revenue Base</h3>
-                    <p class="text-gray-300">
-                        The business operates under 1–3-year commercial contracts with strong renewal behaviour, 
-                        delivering predictable, year-round revenue and strong cash flow.
-                    </p>
+                    <h3 class="text-2xl font-bold mb-4">Contracted Revenue Base</h3>
+                    <p class="text-gray-300 leading-relaxed">1–3-year commercial contracts with strong renewal behaviour, delivering predictable year-round revenue and strong cash flow.</p>
                 </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-8 card-hover">
-                    <div class="w-16 h-16 bg-brand-teal/20 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-brand-teal text-2xl">📈</span>
+
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift cursor-pointer highlight-card" data-modal="growth-profile-modal">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Exceptional Growth and Margin Profile</h3>
-                    <p class="text-gray-300">
-                        The platform has achieved rapid top-line expansion and above-market EBITDA margins, 
-                        driven by route density, fleet efficiency, and disciplined cost controls.
-                    </p>
+                    <h3 class="text-2xl font-bold mb-4">Exceptional Growth Profile</h3>
+                    <p class="text-gray-300 leading-relaxed">Rapid top-line expansion and above-market EBITDA margins, driven by route density, fleet efficiency, and disciplined cost controls.</p>
                 </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-8 card-hover">
-                    <div class="w-16 h-16 bg-brand-teal/20 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-brand-teal text-2xl">⚙️</span>
+
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift cursor-pointer highlight-card" data-modal="platform-modal">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Operationally Mature, Scalable Platform</h3>
-                    <p class="text-gray-300">
-                        Centralized dispatch, advanced fleet technology, standardized SOPs, and compliance-driven 
-                        operations support consistent execution at scale.
-                    </p>
+                    <h3 class="text-2xl font-bold mb-4">Scalable Platform</h3>
+                    <p class="text-gray-300 leading-relaxed">Centralized dispatch, advanced fleet technology, standardized SOPs, and compliance-driven operations support consistent execution at scale.</p>
                 </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-8 card-hover">
-                    <div class="w-16 h-16 bg-brand-teal/20 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-brand-teal text-2xl">🚛</span>
+
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift cursor-pointer highlight-card" data-modal="operating-model-modal">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m13 0h-6m-2-5.5V9a3 3 0 013-3v0a3 3 0 013 3v.5"/>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Self-Performing Operating Model</h3>
-                    <p class="text-gray-300">
-                        A dedicated, self-performing snow and ice management platform drives quality control and 
-                        margin strength through a specialized winter-first approach. Summer maintenance is selectively 
-                        provided to existing winter clients to support retention and reduce seasonality.
-                    </p>
+                    <h3 class="text-2xl font-bold mb-4">Self-Performing Model</h3>
+                    <p class="text-gray-300 leading-relaxed">Dedicated platform drives quality control and margin strength through specialized winter-first approach with selective summer maintenance.</p>
                 </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-8 card-hover">
-                    <div class="w-16 h-16 bg-brand-teal/20 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-brand-teal text-2xl">📊</span>
+
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift cursor-pointer highlight-card" data-modal="industry-dynamics-modal">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Favourable Industry Dynamics</h3>
-                    <p class="text-gray-300">
-                        Rising insurance costs, provincial legislation, and CapEx requirements are forcing smaller 
-                        operators out of the market, creating consolidation opportunities for scaled, professional platforms.
-                    </p>
+                    <h3 class="text-2xl font-bold mb-4">Industry Dynamics</h3>
+                    <p class="text-gray-300 leading-relaxed">Rising insurance costs and regulatory requirements are consolidating the market, creating opportunities for scaled professional platforms.</p>
                 </div>
-                <div class="bg-white/5 backdrop-blur rounded-lg p-8 card-hover">
-                    <div class="w-16 h-16 bg-brand-teal/20 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-brand-teal text-2xl">🎯</span>
+
+                <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift cursor-pointer highlight-card" data-modal="divestiture-modal">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Strategic Opportunity</h3>
-                    <p class="text-gray-300">
-                        Well suited for strategic operators, facility services providers, private equity investors, 
-                        or family offices seeking a defensible platform within a fragmented and essential infrastructure services sector.
-                    </p>
+                    <h3 class="text-2xl font-bold mb-4">Strategic Transition</h3>
+                    <p class="text-gray-300 leading-relaxed">Founder pursuing new ventures with committed structured transition including training, non-compete, and advisory support.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Financial Growth -->
-    <section id="growth" class="py-20 bg-gray-900">
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-800/50">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16">Revenue and EBITDA Growth (2023-2027E)</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div>
-                    <div class="bg-white/5 backdrop-blur rounded-lg p-6 mb-8">
-                        <canvas id="revenueChart" width="400" height="300"></canvas>
+            <h2 class="text-5xl font-bold text-center mb-16 text-gradient section-title">Investment Opportunity</h2>
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-xl text-gray-300 mb-8">This opportunity is well suited for strategic operators, facility services providers, private equity investors, or family offices seeking a defensible platform within a fragmented and essential infrastructure services sector.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10">
+                        <h3 class="text-2xl font-bold mb-4">Listing Details</h3>
+                        <div class="space-y-2 text-left">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Listing ID:</span>
+                                <span class="text-cyan-400 font-semibold">3746</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Location:</span>
+                                <span>Ontario, Canada</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Broker:</span>
+                                <span>A R Business Brokers Inc.</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass bg-white/5 p-8 rounded-2xl border border-white/10">
+                        <h3 class="text-2xl font-bold mb-4">Contact Information</h3>
+                        <div class="space-y-2 text-left">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Phone:</span>
+                                <span class="text-cyan-400">+1 (416) 333-7999</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Email:</span>
+                                <span class="text-cyan-400">info@aldrin.ca</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Website:</span>
+                                <span class="text-cyan-400">www.aldrin.ca</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <div class="bg-white/5 backdrop-blur rounded-lg p-6 overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr class="border-b border-brand-teal/20">
-                                    <th class="text-left py-3 font-bold text-brand-teal">FYE</th>
-                                    <th class="text-right py-3 font-bold text-brand-teal">Revenue</th>
-                                    <th class="text-right py-3 font-bold text-brand-teal">EBITDA</th>
-                                    <th class="text-right py-3 font-bold text-brand-teal">Margin</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-300">
-                                <tr class="border-b border-gray-700/50">
-                                    <td class="py-3">2023</td>
-                                    <td class="py-3 text-right">$2,123,903</td>
-                                    <td class="py-3 text-right">$578,765</td>
-                                    <td class="py-3 text-right">27.3%</td>
-                                </tr>
-                                <tr class="border-b border-gray-700/50">
-                                    <td class="py-3">2024</td>
-                                    <td class="py-3 text-right">$3,062,839</td>
-                                    <td class="py-3 text-right">$960,486</td>
-                                    <td class="py-3 text-right">31.4%</td>
-                                </tr>
-                                <tr class="border-b border-gray-700/50">
-                                    <td class="py-3">2025</td>
-                                    <td class="py-3 text-right">$5,549,938</td>
-                                    <td class="py-3 text-right">$1,749,196</td>
-                                    <td class="py-3 text-right">31.5%</td>
-                                </tr>
-                                <tr class="border-b border-gray-700/50">
-                                    <td class="py-3">2026E</td>
-                                    <td class="py-3 text-right">$6,008,754</td>
-                                    <td class="py-3 text-right">$1,904,775</td>
-                                    <td class="py-3 text-right">31.7%</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3">2027E</td>
-                                    <td class="py-3 text-right font-bold text-brand-teal">$6,562,020</td>
-                                    <td class="py-3 text-right font-bold text-brand-teal">$2,093,284</td>
-                                    <td class="py-3 text-right font-bold text-brand-teal">31.9%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Contact -->
-    <section id="contact" class="py-20 gradient-bg">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-8">Investment Opportunity</h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">
-                For more information about Project Cornerstone and to access the Confidential Information Memorandum, 
-                please contact A R Business Brokers directly.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
-                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
-                    <h3 class="font-bold mb-2">Listing ID</h3>
-                    <p class="text-gray-300">3746</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur rounded-lg p-6">
-                    <h3 class="font-bold mb-2">Location</h3>
-                    <p class="text-gray-300">Ontario, Canada</p>
-                </div>
-            </div>
-            <div class="bg-white/10 backdrop-blur rounded-lg p-8 max-w-2xl mx-auto">
-                <h3 class="text-xl font-bold mb-4">A R Business Brokers Inc.</h3>
-                <p class="text-gray-300 mb-2">113-5800 Ambler Dr, Mississauga, ON L4W 4J4, Canada</p>
-                <p class="text-gray-300 mb-2">T: +1 (416) 333-7999</p>
-                <p class="text-gray-300 mb-6">E: info@aldrin.ca</p>
-                <div class="space-y-4">
-                    <button class="w-full bg-white text-gray-900 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors">
-                        Complete Buyer Profile
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <button class="gradient-bg px-8 py-4 rounded-full text-white font-semibold hover:scale-105 transition-transform pulse-glow" id="ndaButton">
+                        Complete NDA & Buyer Profile
                     </button>
-                    <button class="w-full border border-white text-white hover:bg-white hover:text-gray-900 px-8 py-3 rounded-lg font-semibold transition-colors">
-                        Complete NDA
+                    <button class="border-2 border-cyan-400 px-8 py-4 rounded-full text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-all" id="contactBroker">
+                        Contact Broker Directly
                     </button>
                 </div>
+
+                <p class="text-sm text-gray-500 mt-8">This Business is listed exclusively by A R Business Brokers. Please do not reach out to management, employees or customers directly.</p>
             </div>
         </div>
     </section>
 
     <!-- Modals -->
-    <div id="revenue2025" class="modal">
-        <div class="modal-content">
+    <div id="revenue-modal" class="fixed inset-0 bg-black/70 modal-overlay hidden items-center justify-center z-50 p-4">
+        <div class="glass bg-gray-800 p-8 rounded-2xl border border-white/10 max-w-2xl w-full">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-brand-teal">2025 Revenue Performance</h3>
-                <button class="text-gray-400 hover:text-white text-2xl" onclick="closeModal('revenue2025')">&times;</button>
+                <h3 class="text-3xl font-bold text-gradient">Revenue Projection</h3>
+                <button class="text-gray-400 hover:text-white text-2xl modal-close">&times;</button>
             </div>
             <div class="space-y-4">
+                <p class="text-gray-300">The company projects reaching <span class="text-cyan-400 font-bold">$6.56M in revenue by 2027</span>, representing a compound annual growth rate of 25.2% from 2023 baseline.</p>
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-gray-400">2025 Revenue</p>
-                        <p class="text-2xl font-bold text-brand-teal">$5,549,938</p>
+                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                        <div class="text-sm text-gray-400">2023 Actual</div>
+                        <div class="text-2xl font-bold text-white">$2.12M</div>
                     </div>
-                    <div>
-                        <p class="text-gray-400">YoY Growth</p>
-                        <p class="text-2xl font-bold text-green-400">+81.2%</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-400">2024 Revenue</p>
-                        <p class="text-xl">$3,062,839</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-400">Revenue Increase</p>
-                        <p class="text-xl">+$2,487,099</p>
+                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                        <div class="text-sm text-gray-400">2027 Projection</div>
+                        <div class="text-2xl font-bold text-cyan-400">$6.56M</div>
                     </div>
                 </div>
-                <p class="text-gray-300 mt-4">
-                    Exceptional revenue growth driven by contract expansion, route densification, 
-                    and successful expansion into year-round property services.
-                </p>
             </div>
         </div>
     </div>
 
-    <div id="ebitda2025" class="modal">
-        <div class="modal-content">
+    <div id="growth-modal" class="fixed inset-0 bg-black/70 modal-overlay hidden items-center justify-center z-50 p-4">
+        <div class="glass bg-gray-800 p-8 rounded-2xl border border-white/10 max-w-2xl w-full">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-brand-teal">2025 EBITDA Performance</h3>
-                <button class="text-gray-400 hover:text-white text-2xl" onclick="closeModal('ebitda2025')">&times;</button>
+                <h3 class="text-3xl font-bold text-gradient">Growth Analysis</h3>
+                <button class="text-gray-400 hover:text-white text-2xl modal-close">&times;</button>
             </div>
             <div class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-gray-400">2025 EBITDA</p>
-                        <p class="text-2xl font-bold text-brand-teal">$1,749,196</p>
+                <p class="text-gray-300">The platform has demonstrated exceptional growth trajectory with <span class="text-cyan-400 font-bold">209% total growth</span> from 2023 to 2027E projections.</p>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span>2024 Growth:</span>
+                        <span class="text-green-400 font-bold">+44.2%</span>
                     </div>
-                    <div>
-                        <p class="text-gray-400">EBITDA Margin</p>
-                        <p class="text-2xl font-bold text-green-400">31.5%</p>
+                    <div class="flex justify-between items-center">
+                        <span>2025 Growth:</span>
+                        <span class="text-green-400 font-bold">+81.2%</span>
                     </div>
-                    <div>
-                        <p class="text-gray-400">2024 EBITDA</p>
-                        <p class="text-xl">$960,486</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-400">EBITDA Growth</p>
-                        <p class="text-xl">+82.1%</p>
+                    <div class="flex justify-between items-center">
+                        <span>5-Year CAGR:</span>
+                        <span class="text-cyan-400 font-bold">25.2%</span>
                     </div>
                 </div>
-                <p class="text-gray-300 mt-4">
-                    Strong margin performance maintained through operational efficiency, 
-                    disciplined cost controls, and self-performing service model.
-                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="margin-modal" class="fixed inset-0 bg-black/70 modal-overlay hidden items-center justify-center z-50 p-4">
+        <div class="glass bg-gray-800 p-8 rounded-2xl border border-white/10 max-w-2xl w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-3xl font-bold text-gradient">EBITDA Margin Performance</h3>
+                <button class="text-gray-400 hover:text-white text-2xl modal-close">&times;</button>
+            </div>
+            <div class="space-y-4">
+                <p class="text-gray-300">The company maintains <span class="text-cyan-400 font-bold">consistently strong EBITDA margins above 31%</span> from 2024 onwards, demonstrating operational efficiency and pricing power.</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-gray-700/50 p-4 rounded-lg text-center">
+                        <div class="text-sm text-gray-400">2023</div>
+                        <div class="text-xl font-bold text-white">27.3%</div>
+                    </div>
+                    <div class="bg-gray-700/50 p-4 rounded-lg text-center">
+                        <div class="text-sm text-gray-400">2025</div>
+                        <div class="text-xl font-bold text-cyan-400">31.5%</div>
+                    </div>
+                    <div class="bg-gray-700/50 p-4 rounded-lg text-center">
+                        <div class="text-sm text-gray-400">2027E</div>
+                        <div class="text-xl font-bold text-cyan-400">31.9%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contracts-modal" class="fixed inset-0 bg-black/70 modal-overlay hidden items-center justify-center z-50 p-4">
+        <div class="glass bg-gray-800 p-8 rounded-2xl border border-white/10 max-w-2xl w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-3xl font-bold text-gradient">Contract Structure</h3>
+                <button class="text-gray-400 hover:text-white text-2xl modal-close">&times;</button>
+            </div>
+            <div class="space-y-4">
+                <p class="text-gray-300">The business operates under <span class="text-cyan-400 font-bold">1-3 year commercial contracts</span> with strong renewal behavior, providing predictable revenue streams and high customer retention.</p>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span>Contract Length:</span>
+                        <span class="text-cyan-400 font-bold">1-3 Years</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Renewal Behavior:</span>
+                        <span class="text-green-400 font-bold">Strong</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Revenue Type:</span>
+                        <span class="text-cyan-400 font-bold">Recurring</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero animations
-        gsap.timeline()
-            .to('#hero-title', {duration: 1, opacity: 1, y: 0, ease: 'power2.out'})
-            .to('#hero-subtitle', {duration: 1, opacity: 1, y: 0, ease: 'power2.out'}, '-=0.5')
-            .to('#hero-stats', {duration: 1, opacity: 1, y: 0, ease: 'power2.out'}, '-=0.5')
-            .to('#hero-cta', {duration: 1, opacity: 1, y: 0, ease: 'power2.out'}, '-=0.5');
+        // GSAP Animations
+        gsap.from('.hero-title', { duration: 1.2, y: 100, opacity: 0, ease: 'power3.out' });
+        gsap.from('.hero-subtitle', { duration: 1, y: 50, opacity: 0, delay: 0.3, ease: 'power3.out' });
+        gsap.from('.hero-description', { duration: 1, y: 30, opacity: 0, delay: 0.6, ease: 'power3.out' });
+        gsap.from('.hero-stats .stat-card', { 
+            duration: 0.8, 
+            y: 50, 
+            opacity: 0, 
+            delay: 0.9, 
+            stagger: 0.1, 
+            ease: 'power3.out' 
+        });
+        gsap.from('.hero-cta', { duration: 1, y: 30, opacity: 0, delay: 1.3, ease: 'power3.out' });
 
-        // Counter animation
-        function animateCounter(element) {
-            const target = parseInt(element.getAttribute('data-counter'));
-            const isRevenue = target > 1000000;
-            gsap.to(element, {
-                innerHTML: isRevenue ? target : target,
+        // Section animations
+        gsap.utils.toArray('.section-title').forEach(title => {
+            gsap.from(title, {
+                scrollTrigger: title,
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: 'power3.out'
+            });
+        });
+
+        // Counter animations
+        function animateCounter(selector, endValue, suffix = '') {
+            gsap.to(selector, {
+                scrollTrigger: {
+                    trigger: selector,
+                    start: 'top 80%'
+                },
+                textContent: endValue,
                 duration: 2,
-                ease: "power1.inOut",
-                snap: { innerHTML: 1 },
+                ease: 'power2.out',
+                snap: { textContent: 1 },
                 onUpdate: function() {
-                    if (isRevenue) {
-                        element.innerHTML = '$' + Math.ceil(this.targets()[0].innerHTML).toLocaleString();
-                    } else {
-                        element.innerHTML = Math.ceil(this.targets()[0].innerHTML) + '%';
-                    }
+                    this.targets()[0].textContent = Math.round(this.targets()[0].textContent) + suffix;
                 }
             });
         }
 
-        // Trigger counter animations
-        document.querySelectorAll('[data-counter]').forEach(counter => {
-            ScrollTrigger.create({
-                trigger: counter,
-                start: "top 80%",
-                once: true,
-                onEnter: () => animateCounter(counter)
+        // Modal functionality
+        const modals = document.querySelectorAll('[id$="-modal"]');
+        const modalTriggers = document.querySelectorAll('[data-modal]');
+        const modalCloses = document.querySelectorAll('.modal-close');
+
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const modalId = trigger.getAttribute('data-modal');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    gsap.from(modal.querySelector('.glass'), { scale: 0.8, opacity: 0, duration: 0.3 });
+                }
             });
         });
 
-        // Section fade-ins
-        gsap.utils.toArray('section').forEach(section => {
-            gsap.fromTo(section.children, 
-                {opacity: 0, y: 30}, 
-                {
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 1,
-                    stagger: 0.1,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse"
-                    }
-                }
-            );
+        modalCloses.forEach(close => {
+            close.addEventListener('click', () => {
+                const modal = close.closest('[id$="-modal"]');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
         });
 
+        // Close modals on backdrop click
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+        });
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modals.forEach(modal => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                });
+            }
+        });
+
+        // Charts
+        const revenueData = [2123903, 3062839, 5549938, 6008754, 6562020];
+        const ebitdaData = [578765, 960486, 1749196, 1904775, 2093284];
+        const labels = ['2023', '2024', '2025', '2026E', '2027E'];
+
         // Revenue Chart
-        const ctx = document.getElementById('revenueChart').getContext('2d');
-        new Chart(ctx, {
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
             type: 'line',
             data: {
-                labels: ['2023', '2024', '2025', '2026E', '2027E'],
+                labels: labels,
                 datasets: [{
                     label: 'Revenue',
-                    data: [2123903, 3062839, 5549938, 6008754, 6562020],
-                    borderColor: '#4FB8C4',
-                    backgroundColor: 'rgba(79, 184, 196, 0.1)',
+                    data: revenueData,
+                    borderColor: '#00D4FF',
+                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
                     borderWidth: 3,
                     fill: true,
-                    tension: 0.4
-                }, {
-                    label: 'EBITDA',
-                    data: [578765, 960486, 1749196, 1904775, 2093284],
-                    borderColor: '#2D3748',
-                    backgroundColor: 'rgba(45, 55, 72, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4
+                    tension: 0.4,
+                    pointBackgroundColor: '#00D4FF',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        labels: { color: '#fff' }
-                    }
+                    legend: { display: false }
                 },
                 scales: {
-                    x: { 
-                        ticks: { color: '#9CA3AF' },
-                        grid: { color: 'rgba(156, 163, 175, 0.1)' }
-                    },
-                    y: { 
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
                         ticks: { 
                             color: '#9CA3AF',
                             callback: function(value) {
                                 return '$' + (value / 1000000).toFixed(1) + 'M';
                             }
-                        },
-                        grid: { color: 'rgba(156, 163, 175, 0.1)' }
+                        }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#9CA3AF' }
                     }
                 }
             }
         });
 
-        // Modal functions
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal on backdrop click
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeModal(this.id);
+        // EBITDA Chart
+        const ebitdaCtx = document.getElementById('ebitdaChart').getContext('2d');
+        new Chart(ebitdaCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'EBITDA',
+                    data: ebitdaData,
+                    backgroundColor: 'rgba(0, 212, 255, 0.8)',
+                    borderColor: '#00D4FF',
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { 
+                            color: '#9CA3AF',
+                            callback: function(value) {
+                                return '$' + (value / 1000000).toFixed(1) + 'M';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    }
                 }
-            });
+            }
         });
 
-        // Close modal on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.show').forEach(modal => {
-                    closeModal(modal.id);
-                });
+        // Overview Chart (Margin comparison)
+        const overviewCtx = document.getElementById('overviewChart').getContext('2d');
+        new Chart(overviewCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['EBITDA Margin', 'Operating Costs'],
+                datasets: [{
+                    data: [31.9, 68.1],
+                    backgroundColor: ['#00D4FF', 'rgba(255,255,255,0.1)'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#9CA3AF' }
+                    }
+                }
             }
+        });
+
+        // Button interactions
+        document.getElementById('downloadCIM').addEventListener('click', () => {
+            alert('CIM download requires NDA completion and broker approval.');
+        });
+
+        document.getElementById('scheduleCall').addEventListener('click', () => {
+            alert('Please contact A R Business Brokers at +1 (416) 333-7999 to schedule.');
+        });
+
+        document.getElementById('ndaButton').addEventListener('click', () => {
+            alert('NDA and Buyer Profile forms will be provided by the broker.');
+        });
+
+        document.getElementById('contactBroker').addEventListener('click', () => {
+            window.open('mailto:info@aldrin.ca?subject=Project Cornerstone Inquiry - Listing ID 3746');
         });
 
         // Smooth scrolling for navigation
@@ -566,12 +666,41 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        });
+
+        // Interactive table rows
+        document.querySelectorAll('.table-row').forEach(row => {
+            row.addEventListener('click', () => {
+                const year = row.getAttribute('data-year');
+                alert(`Detailed breakdown for ${year} - Contact broker for comprehensive financial analysis.`);
+            });
+        });
+
+        // Enhanced hover effects
+        gsap.utils.toArray('.hover-lift').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                gsap.to(element, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
+            });
+            element.addEventListener('mouseleave', () => {
+                gsap.to(element, { scale: 1, duration: 0.3, ease: 'power2.out' });
+            });
+        });
+
+        // Page load animation
+        gsap.from('nav', { y: -100, opacity: 0, duration: 1, ease: 'power3.out' });
+        
+        // Parallax effect for hero section
+        gsap.to('.hero-title', {
+            scrollTrigger: {
+                trigger: '.hero-title',
+                start: 'top center',
+                end: 'bottom top',
+                scrub: 1
+            },
+            y: -100
         });
     </script>
 </body>
