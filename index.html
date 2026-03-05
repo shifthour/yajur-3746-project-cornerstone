@@ -3,924 +3,504 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Cornerstone - Commercial Snow Management Platform</title>
+    <title>Project Cornerstone - Commercial Snow Management Acquisition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #4169E1;
-            --primary-light: #6B82FF;
-            --secondary: #FFD700;
-            --accent: #00D4FF;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #080C14 0%, #0D1320 50%, #131B2E 100%);
-        }
-        
-        .glass-card {
-            background: rgba(13, 19, 32, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(65, 105, 225, 0.1);
-        }
-        
-        .glass-card:hover {
-            border-color: rgba(65, 105, 225, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(65, 105, 225, 0.1);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .animated-grid {
-            background-image: 
-                radial-gradient(circle at 1px 1px, rgba(65, 105, 225, 0.15) 1px, transparent 0);
-            background-size: 50px 50px;
-            animation: grid-move 20s linear infinite;
-        }
-        
-        @keyframes grid-move {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-        
-        .section-reveal {
-            opacity: 0;
-            transform: translateY(40px);
-        }
-        
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .modal-content {
-            background: rgba(13, 19, 32, 0.95);
-            border: 1px solid rgba(65, 105, 225, 0.3);
-            border-radius: 20px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 30px;
-            position: relative;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .tab-btn {
-            background: rgba(13, 19, 32, 0.6);
-            border: 1px solid rgba(65, 105, 225, 0.2);
-            color: #94a3b8;
-        }
-        
-        .tab-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-color: var(--primary);
-            color: white;
-        }
-        
-        .clickable-card::after {
-            content: 'Click to explore';
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            font-size: 12px;
-            color: rgba(65, 105, 225, 0.7);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .clickable-card:hover::after {
-            opacity: 1;
-        }
-        
-        .floating-cta {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 90;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            padding: 15px 25px;
-            border-radius: 50px;
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 10px 30px rgba(65, 105, 225, 0.3);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 10px 30px rgba(65, 105, 225, 0.3); }
-            50% { box-shadow: 0 15px 40px rgba(65, 105, 225, 0.5); }
-        }
-        
-        .expandable {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .expandable.open {
-            max-height: 400px;
-        }
-        
-        .chevron {
-            transition: transform 0.3s ease;
-        }
-        
-        .chevron.open {
-            transform: rotate(180deg);
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); }
+        .card-gradient { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+        .text-gradient { background: linear-gradient(135deg, #ff6b35, #f7931e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .accent-gradient { background: linear-gradient(135deg, #ff6b35, #f7931e); }
+        .blue-gradient { background: linear-gradient(135deg, #4a90e2, #357abd); }
     </style>
 </head>
-<body class="bg-gray-900 text-white font-inter">
+<body class="bg-gray-900 text-white overflow-x-hidden">
+    
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                    <span class="text-white font-bold text-lg">AR</span>
+    <nav class="fixed top-0 w-full z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold text-gradient">Project Cornerstone</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="hover:text-orange-400 transition-colors">Overview</a>
+                    <a href="#financials" class="hover:text-orange-400 transition-colors">Financials</a>
+                    <a href="#highlights" class="hover:text-orange-400 transition-colors">Investment</a>
+                    <a href="#operations" class="hover:text-orange-400 transition-colors">Operations</a>
+                    <a href="#contact" class="hover:text-orange-400 transition-colors">Contact</a>
                 </div>
-                <span class="text-xl font-bold">Project Cornerstone</span>
-            </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#overview" class="hover:text-blue-400 transition-colors">Overview</a>
-                <a href="#financials" class="hover:text-blue-400 transition-colors">Financials</a>
-                <a href="#market" class="hover:text-blue-400 transition-colors">Market</a>
-                <a href="#highlights" class="hover:text-blue-400 transition-colors">Highlights</a>
-                <button class="bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-all">
-                    Get Access
-                </button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="min-h-screen gradient-bg animated-grid flex items-center justify-center relative overflow-hidden">
-        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+    <section class="min-h-screen flex items-center justify-center gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-20 left-10 w-64 h-64 rounded-full accent-gradient opacity-30 blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 rounded-full blue-gradient opacity-20 blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div class="mb-8">
-                <h1 class="text-6xl md:text-7xl font-playfair font-bold mb-6">
-                    <span class="gradient-text hero-text">Commercial Snow</span><br>
-                    <span class="gradient-text hero-text">Management Platform</span>
+                <h1 class="text-6xl md:text-7xl font-black mb-6 leading-tight">
+                    <span class="text-gradient">Project Cornerstone</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto hero-subtitle">
-                    High-growth, contract-based snow and ice management serving mission-critical sites across GTA corridors
+                <p class="text-2xl md:text-3xl font-light mb-4 text-gray-300">
+                    Commercial Snow Management & Property Maintenance
+                </p>
+                <p class="text-lg text-gray-400 mb-8">Ontario, Canada • Listing ID: 3746</p>
+            </div>
+
+            <!-- Key Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <div class="card-gradient rounded-2xl p-6 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="text-3xl font-bold text-gradient mb-2" data-count="6562020">$0</div>
+                    <div class="text-sm text-gray-400">2027E Revenue</div>
+                </div>
+                <div class="card-gradient rounded-2xl p-6 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="text-3xl font-bold text-gradient mb-2" data-count="31.9">0%</div>
+                    <div class="text-sm text-gray-400">EBITDA Margin</div>
+                </div>
+                <div class="card-gradient rounded-2xl p-6 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="text-3xl font-bold text-gradient mb-2" data-count="161">0%</div>
+                    <div class="text-sm text-gray-400">3-Year Growth</div>
+                </div>
+                <div class="card-gradient rounded-2xl p-6 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="text-3xl font-bold text-gradient mb-2">1-3</div>
+                    <div class="text-sm text-gray-400">Year Contracts</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="accent-gradient px-8 py-4 rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-1">
+                    Download Investment Package
+                </button>
+                <button class="border-2 border-orange-400 px-8 py-4 rounded-xl font-semibold text-orange-400 hover:bg-orange-400 hover:text-white transition-all duration-300">
+                    Schedule Call
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Overview -->
+    <section id="overview" class="py-24 bg-gray-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 text-gradient">Company Profile</h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    A high-growth, contract based commercial snow and ice management platform servicing mission-critical industrial and institutional sites across core GTA corridors.
                 </p>
             </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 hero-stats">
-                <div class="glass-card p-6 rounded-2xl clickable-card cursor-pointer relative" onclick="openModal('revenue-growth')">
-                    <div class="text-3xl font-bold gradient-text" data-count="81">0</div>
-                    <div class="text-gray-400 text-sm">Revenue Growth (%)</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl clickable-card cursor-pointer relative" onclick="openModal('ebitda-margin')">
-                    <div class="text-3xl font-bold gradient-text" data-count="31.5">0</div>
-                    <div class="text-gray-400 text-sm">EBITDA Margin (%)</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl clickable-card cursor-pointer relative" onclick="openModal('contract-length')">
-                    <div class="text-3xl font-bold gradient-text">1-3</div>
-                    <div class="text-gray-400 text-sm">Year Contracts</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl clickable-card cursor-pointer relative" onclick="openModal('listing-id')">
-                    <div class="text-3xl font-bold gradient-text">3746</div>
-                    <div class="text-gray-400 text-sm">Listing ID</div>
-                </div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row gap-4 justify-center hero-cta">
-                <button class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all">
-                    Request Information
-                </button>
-                <button class="border border-blue-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-500/10 transition-all">
-                    View Financials
-                </button>
-            </div>
-        </div>
-    </section>
 
-    <!-- Financial Overview Section -->
-    <section id="financials" class="py-20 bg-gray-900 section-reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-playfair font-bold text-center mb-16 gradient-text">
-                Financial Performance
-            </h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-                <!-- Revenue Chart -->
-                <div class="glass-card p-8 rounded-3xl">
-                    <h3 class="text-2xl font-semibold mb-6">Revenue Growth Trajectory</h3>
-                    <canvas id="revenueChart" width="400" height="300"></canvas>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50">
+                    <h3 class="text-2xl font-bold mb-6 text-orange-400">Business Model</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Recurring 1-3 year agreements with strong renewal behavior</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Mission-critical industrial and institutional sites</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Highly predictable seasonal cash flow</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Attractive margin performance</span>
+                        </li>
+                    </ul>
                 </div>
-                
-                <!-- EBITDA Chart -->
-                <div class="glass-card p-8 rounded-3xl">
-                    <h3 class="text-2xl font-semibold mb-6">EBITDA Performance</h3>
-                    <canvas id="ebitdaChart" width="400" height="300"></canvas>
+
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50">
+                    <h3 class="text-2xl font-bold mb-6 text-orange-400">Operations Excellence</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Fully self-performed through owned fleet</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Technology-enabled dispatch and compliance systems</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Standardized SOPs and embedded leadership team</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Minimal owner dependency</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Financial Table -->
-            <div class="glass-card p-8 rounded-3xl">
-                <h3 class="text-2xl font-semibold mb-6">Financial Summary (2023-2027E)</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b border-gray-700">
-                                <th class="text-left py-4 px-2">FYE</th>
-                                <th class="text-right py-4 px-2">Revenue</th>
-                                <th class="text-right py-4 px-2">Normalized EBITDA</th>
-                                <th class="text-right py-4 px-2">EBITDA Margin</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 cursor-pointer clickable-row" onclick="openModal('fy2023-details')">
-                                <td class="py-4 px-2 font-semibold">2023</td>
-                                <td class="py-4 px-2 text-right">$2,123,903</td>
-                                <td class="py-4 px-2 text-right">$578,765</td>
-                                <td class="py-4 px-2 text-right text-green-400">27.3%</td>
-                            </tr>
-                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 cursor-pointer clickable-row" onclick="openModal('fy2024-details')">
-                                <td class="py-4 px-2 font-semibold">2024</td>
-                                <td class="py-4 px-2 text-right">$3,062,839</td>
-                                <td class="py-4 px-2 text-right">$960,486</td>
-                                <td class="py-4 px-2 text-right text-green-400">31.4%</td>
-                            </tr>
-                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 cursor-pointer clickable-row" onclick="openModal('fy2025-details')">
-                                <td class="py-4 px-2 font-semibold">2025</td>
-                                <td class="py-4 px-2 text-right">$5,549,938</td>
-                                <td class="py-4 px-2 text-right">$1,749,196</td>
-                                <td class="py-4 px-2 text-right text-green-400">31.5%</td>
-                            </tr>
-                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 cursor-pointer clickable-row" onclick="openModal('fy2026e-details')">
-                                <td class="py-4 px-2 font-semibold">2026E</td>
-                                <td class="py-4 px-2 text-right">$6,008,754</td>
-                                <td class="py-4 px-2 text-right">$1,904,775</td>
-                                <td class="py-4 px-2 text-right text-green-400">31.7%</td>
-                            </tr>
-                            <tr class="hover:bg-gray-800/30 cursor-pointer clickable-row" onclick="openModal('fy2027e-details')">
-                                <td class="py-4 px-2 font-semibold">2027E</td>
-                                <td class="py-4 px-2 text-right">$6,562,020</td>
-                                <td class="py-4 px-2 text-right">$2,093,284</td>
-                                <td class="py-4 px-2 text-right text-green-400">31.9%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Business Overview Section -->
-    <section id="overview" class="py-20 bg-gray-800/50 section-reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-playfair font-bold text-center mb-16 gradient-text">
-                Business Overview
-            </h2>
-            
-            <!-- Tab Navigation -->
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <button class="tab-btn px-6 py-3 rounded-full transition-all active" onclick="switchTab('operations', this)">Operations Model</button>
-                <button class="tab-btn px-6 py-3 rounded-full transition-all" onclick="switchTab('expansion', this)">Expansion Strategy</button>
-                <button class="tab-btn px-6 py-3 rounded-full transition-all" onclick="switchTab('platform', this)">Platform Features</button>
-                <button class="tab-btn px-6 py-3 rounded-full transition-all" onclick="switchTab('divestiture', this)">Opportunity</button>
-            </div>
-            
-            <!-- Tab Content -->
-            <div id="operations" class="tab-content active">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('self-performing')">
-                        <h3 class="text-xl font-semibold mb-4 gradient-text">Self-Performing Model</h3>
-                        <p class="text-gray-300 mb-4">Operations are fully self-performed through an owned fleet, disciplined route density, and technology-enabled dispatch systems.</p>
-                        <div class="text-blue-400 font-semibold">Quality Control & Margin Strength</div>
-                    </div>
-                    <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('contracts')">
-                        <h3 class="text-xl font-semibold mb-4 gradient-text">Contract Structure</h3>
-                        <p class="text-gray-300 mb-4">Services mission-critical industrial and institutional sites under recurring 1–3-year agreements with strong renewal behaviour.</p>
-                        <div class="text-blue-400 font-semibold">Predictable Revenue Stream</div>
-                    </div>
-                    <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('technology')">
-                        <h3 class="text-xl font-semibold mb-4 gradient-text">Technology Platform</h3>
-                        <p class="text-gray-300 mb-4">Technology-enabled dispatch and compliance systems with standardized SOPs and embedded leadership team.</p>
-                        <div class="text-blue-400 font-semibold">Minimal Owner Dependency</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="expansion" class="tab-content">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="glass-card p-8 rounded-3xl">
-                        <h3 class="text-xl font-semibold mb-4 gradient-text">Year-Round Services</h3>
+            <div class="mt-12 card-gradient rounded-3xl p-8 border border-gray-700/50">
+                <h3 class="text-2xl font-bold mb-6 text-orange-400">Growth Strategy</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Current Expansion</h4>
                         <p class="text-gray-300 mb-4">The company has expanded into year-round property services to increase customer retention and reduce seasonality.</p>
-                        <div class="space-y-3">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">Summer maintenance for existing winter clients</span>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">Enhanced customer retention</span>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">Reduced seasonal revenue fluctuation</span>
-                            </div>
-                        </div>
                     </div>
-                    <div class="glass-card p-8 rounded-3xl">
-                        <h3 class="text-xl font-semibold mb-4 gradient-text">Growth Opportunities</h3>
-                        <p class="text-gray-300 mb-4">Multiple expansion vectors for continued growth:</p>
-                        <div class="space-y-3">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">Route densification</span>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">Larger multi-site mandates</span>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">Expanded service penetration</span>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">Selective market consolidation</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="platform" class="tab-content">
-                <div class="glass-card p-8 rounded-3xl">
-                    <h3 class="text-2xl font-semibold mb-6 gradient-text">Institutionalized Platform</h3>
-                    <p class="text-gray-300 mb-6">The platform has been institutionalized with standardized SOPs and an embedded leadership team, resulting in minimal owner dependency and strong execution during peak winter demand.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <h4 class="text-lg font-semibold text-blue-400">Operational Excellence</h4>
-                            <ul class="space-y-2 text-gray-300">
-                                <li>• Centralized dispatch systems</li>
-                                <li>• Advanced fleet technology</li>
-                                <li>• Standardized SOPs</li>
-                                <li>• Compliance-driven operations</li>
-                            </ul>
-                        </div>
-                        <div class="space-y-4">
-                            <h4 class="text-lg font-semibold text-blue-400">Scalability Features</h4>
-                            <ul class="space-y-2 text-gray-300">
-                                <li>• Consistent execution at scale</li>
-                                <li>• Embedded leadership team</li>
-                                <li>• Minimal owner dependency</li>
-                                <li>• Peak demand management</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="divestiture" class="tab-content">
-                <div class="glass-card p-8 rounded-3xl">
-                    <h3 class="text-2xl font-semibold mb-6 gradient-text">Investment Opportunity</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-lg font-semibold text-blue-400 mb-4">Reason for Divestiture</h4>
-                            <p class="text-gray-300 mb-4">The founder is pursuing new ventures and is committed to a structured transition, including hands-on support post-closing and availability for advisory involvement to ensure continuity of client relationships and operational stability.</p>
-                            <div class="text-green-400 font-semibold">Includes Training & Non-Compete</div>
-                        </div>
-                        <div>
-                            <h4 class="text-lg font-semibold text-blue-400 mb-4">Target Buyers</h4>
-                            <p class="text-gray-300 mb-4">This opportunity is well suited for:</p>
-                            <ul class="space-y-2 text-gray-300">
-                                <li>• Strategic operators</li>
-                                <li>• Facility services providers</li>
-                                <li>• Private equity investors</li>
-                                <li>• Family offices</li>
-                            </ul>
-                        </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Future Opportunities</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Route densification</li>
+                            <li>• Larger multi-site mandates</li>
+                            <li>• Expanded service penetration across existing accounts</li>
+                            <li>• Selective consolidation in fragmented market</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Investment Highlights Section -->
-    <section id="highlights" class="py-20 bg-gray-900 section-reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-playfair font-bold text-center mb-16 gradient-text">
-                Investment Highlights
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('recurring-revenue')">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4 gradient-text">Contracted, Recurring Revenue Base</h3>
-                    <p class="text-gray-300">The business operates under 1–3-year commercial contracts with strong renewal behaviour, delivering predictable, year-round revenue and strong cash flow.</p>
+    <!-- Financial Performance -->
+    <section id="financials" class="py-24 bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 text-gradient">Financial Performance</h2>
+                <p class="text-xl text-gray-300">Exceptional growth trajectory with consistent margin expansion</p>
+            </div>
+
+            <!-- Revenue and EBITDA Chart -->
+            <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 mb-12">
+                <h3 class="text-2xl font-bold mb-8 text-orange-400">Revenue and EBITDA Growth (2023-2027E)</h3>
+                <div class="h-96">
+                    <canvas id="revenueChart"></canvas>
                 </div>
-                
-                <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('growth-margin')">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                        </svg>
+            </div>
+
+            <!-- Financial Data Table -->
+            <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 overflow-x-auto">
+                <h3 class="text-2xl font-bold mb-8 text-orange-400">Financial Summary</h3>
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="py-3 px-4 font-semibold">Year</th>
+                            <th class="py-3 px-4 font-semibold">Revenue</th>
+                            <th class="py-3 px-4 font-semibold">Normalized EBITDA</th>
+                            <th class="py-3 px-4 font-semibold">EBITDA Margin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-800 hover:bg-gray-800/30">
+                            <td class="py-4 px-4 font-medium">2023</td>
+                            <td class="py-4 px-4">$2,123,903</td>
+                            <td class="py-4 px-4">$578,765</td>
+                            <td class="py-4 px-4 text-orange-400 font-semibold">27.3%</td>
+                        </tr>
+                        <tr class="border-b border-gray-800 hover:bg-gray-800/30">
+                            <td class="py-4 px-4 font-medium">2024</td>
+                            <td class="py-4 px-4">$3,062,839</td>
+                            <td class="py-4 px-4">$960,486</td>
+                            <td class="py-4 px-4 text-orange-400 font-semibold">31.4%</td>
+                        </tr>
+                        <tr class="border-b border-gray-800 hover:bg-gray-800/30">
+                            <td class="py-4 px-4 font-medium">2025</td>
+                            <td class="py-4 px-4">$5,549,938</td>
+                            <td class="py-4 px-4">$1,749,196</td>
+                            <td class="py-4 px-4 text-orange-400 font-semibold">31.5%</td>
+                        </tr>
+                        <tr class="border-b border-gray-800 hover:bg-gray-800/30">
+                            <td class="py-4 px-4 font-medium">2026E</td>
+                            <td class="py-4 px-4">$6,008,754</td>
+                            <td class="py-4 px-4">$1,904,775</td>
+                            <td class="py-4 px-4 text-orange-400 font-semibold">31.7%</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30">
+                            <td class="py-4 px-4 font-medium">2027E</td>
+                            <td class="py-4 px-4">$6,562,020</td>
+                            <td class="py-4 px-4">$2,093,284</td>
+                            <td class="py-4 px-4 text-orange-400 font-semibold">31.9%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Highlights -->
+    <section id="highlights" class="py-24 bg-gray-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 text-gradient">Investment Highlights</h2>
+                <p class="text-xl text-gray-300">Key factors driving exceptional returns</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mb-6">
+                        <span class="text-2xl font-bold">📋</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4 gradient-text">Exceptional Growth and Margin Profile</h3>
-                    <p class="text-gray-300">The platform has achieved rapid top-line expansion and above-market EBITDA margins, driven by route density, fleet efficiency, and disciplined cost controls.</p>
+                    <h3 class="text-xl font-bold mb-4 text-orange-400">Contracted, Recurring Revenue Base</h3>
+                    <p class="text-gray-300">Operating under 1-3 year commercial contracts with strong renewal behavior, delivering predictable year-round revenue and strong cash flow.</p>
                 </div>
-                
-                <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('scalable-platform')">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
-                        </svg>
+
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mb-6">
+                        <span class="text-2xl font-bold">📈</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4 gradient-text">Operationally Mature, Scalable Platform</h3>
+                    <h3 class="text-xl font-bold mb-4 text-orange-400">Exceptional Growth and Margin Profile</h3>
+                    <p class="text-gray-300">Rapid top-line expansion and above-market EBITDA margins, driven by route density, fleet efficiency, and disciplined cost controls.</p>
+                </div>
+
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mb-6">
+                        <span class="text-2xl font-bold">⚙️</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-orange-400">Operationally Mature, Scalable Platform</h3>
                     <p class="text-gray-300">Centralized dispatch, advanced fleet technology, standardized SOPs, and compliance-driven operations support consistent execution at scale.</p>
                 </div>
-                
-                <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('self-performing')">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
-                        </svg>
+
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mb-6">
+                        <span class="text-2xl font-bold">🚛</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4 gradient-text">Self-Performing Operating Model</h3>
-                    <p class="text-gray-300">A dedicated, self-performing snow and ice management platform drives quality control and margin strength through a specialized winter-first approach.</p>
+                    <h3 class="text-xl font-bold mb-4 text-orange-400">Self-Performing Operating Model</h3>
+                    <p class="text-gray-300">Dedicated, self-performing platform drives quality control and margin strength through specialized winter-first approach with selective summer maintenance.</p>
                 </div>
-                
-                <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('industry-dynamics')">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                        </svg>
+
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mb-6">
+                        <span class="text-2xl font-bold">🎯</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4 gradient-text">Favourable Industry Dynamics</h3>
-                    <p class="text-gray-300">Rising insurance costs, provincial legislation, and CapEx requirements are forcing smaller operators out of the market, creating consolidation opportunities.</p>
+                    <h3 class="text-xl font-bold mb-4 text-orange-400">Favorable Industry Dynamics</h3>
+                    <p class="text-gray-300">Rising insurance costs, provincial legislation, and CapEx requirements are forcing smaller operators out, creating consolidation opportunities.</p>
                 </div>
-                
-                <div class="glass-card p-8 rounded-3xl clickable-card cursor-pointer relative" onclick="openModal('market-position')">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-                        </svg>
+
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50 hover:border-orange-400/50 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mb-6">
+                        <span class="text-2xl font-bold">🎖️</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4 gradient-text">GTA Market Position</h3>
-                    <p class="text-gray-300">Services mission-critical industrial and institutional sites across core GTA corridors, providing essential infrastructure services in a fragmented market.</p>
+                    <h3 class="text-xl font-bold mb-4 text-orange-400">Structured Transition</h3>
+                    <p class="text-gray-300">Founder committed to structured transition with training, non-compete, hands-on support post-closing, and advisory involvement for continuity.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="py-20 bg-gray-800/50">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-5xl font-playfair font-bold mb-8 gradient-text">
-                Ready to Learn More?
-            </h2>
-            <p class="text-xl text-gray-300 mb-12">
-                Complete your Buyer Profile and execute an NDA to access the Confidential Information Memorandum (CIM)
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-2xl font-bold gradient-text mb-2">Step 1</div>
-                    <div class="text-gray-300">Complete Buyer Profile</div>
+    <!-- Operations & Market Position -->
+    <section id="operations" class="py-24 bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 text-gradient">Operations & Market Position</h2>
+                <p class="text-xl text-gray-300">Defensible platform in essential infrastructure services</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50">
+                    <h3 class="text-2xl font-bold mb-6 text-orange-400">Target Buyers</h3>
+                    <p class="text-gray-300 mb-6">This opportunity is well suited for:</p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Strategic operators seeking vertical expansion</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Facility services providers looking for adjacency</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Private equity investors targeting defensible platforms</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Family offices seeking essential infrastructure exposure</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-2xl font-bold gradient-text mb-2">Step 2</div>
-                    <div class="text-gray-300">Execute NDA</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-2xl font-bold gradient-text mb-2">Step 3</div>
-                    <div class="text-gray-300">Access Full CIM</div>
+
+                <div class="card-gradient rounded-3xl p-8 border border-gray-700/50">
+                    <h3 class="text-2xl font-bold mb-6 text-orange-400">Reason for Divestiture</h3>
+                    <p class="text-gray-300 mb-6">The founder is pursuing a new venture and is committed to ensuring a smooth transition:</p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Structured transition process with comprehensive training</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Non-compete agreement to protect buyer interests</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Hands-on support post-closing for operational continuity</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-2 h-2 rounded-full accent-gradient mt-2 mr-4 flex-shrink-0"></div>
+                            <span>Availability for ongoing advisory involvement</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <button class="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all">
-                    Complete Buyer Profile
-                </button>
-                <button class="border border-blue-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-500/10 transition-all">
-                    Execute NDA
-                </button>
-            </div>
-            
-            <div class="mt-12 text-sm text-gray-400">
-                <p>Listed exclusively by A R Business Brokers Inc.</p>
-                <p>113-5800 Ambler Dr, Mississauga, ON L4W 4J4, Canada</p>
-                <p>T: +1 (416) 333-7999 | E: info@aldrin.ca</p>
+
+            <div class="mt-12 card-gradient rounded-3xl p-8 border border-gray-700/50">
+                <h3 class="text-2xl font-bold mb-6 text-orange-400 text-center">Platform Capabilities</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full accent-gradient flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl font-bold">🎯</span>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Mission-Critical Focus</h4>
+                        <p class="text-gray-300 text-sm">Servicing industrial and institutional sites across core GTA corridors with disciplined route density.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full accent-gradient flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl font-bold">💻</span>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Technology Enabled</h4>
+                        <p class="text-gray-300 text-sm">Advanced dispatch systems, fleet technology, and compliance tracking for superior service delivery.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full accent-gradient flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl font-bold">📊</span>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Institutionalized</h4>
+                        <p class="text-gray-300 text-sm">Standardized SOPs, embedded leadership team, and minimal owner dependency for scalable operations.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Floating CTA -->
-    <button class="floating-cta">
-        Schedule a Call
-    </button>
+    <!-- Contact & Next Steps -->
+    <section id="contact" class="py-24 bg-gray-800/30">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-16">
+                <h2 class="text-5xl font-bold mb-6 text-gradient">Ready to Proceed?</h2>
+                <p class="text-xl text-gray-300 mb-8">Access the complete Confidential Information Memorandum and schedule your due diligence call.</p>
+            </div>
 
-    <!-- Modal Container -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <button class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" onclick="closeModal()">&times;</button>
-            <div id="modal-body"></div>
+            <div class="card-gradient rounded-3xl p-12 border border-gray-700/50 mb-12">
+                <h3 class="text-2xl font-bold mb-8 text-orange-400">Next Steps</h3>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold">1</span>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Complete Buyer Profile</h4>
+                        <p class="text-gray-300 text-sm">Submit your investor profile and financial qualification information.</p>
+                    </div>
+                    <div>
+                        <div class="w-16 h-16 rounded-full accent-gradient flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold">2</span>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Execute NDA</h4>
+                        <p class="text-gray-300 text-sm">Sign the Non-Disclosure Agreement to access confidential materials.</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <button class="accent-gradient px-8 py-4 rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300">
+                        Complete Buyer Profile
+                    </button>
+                    <button class="blue-gradient px-8 py-4 rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+                        Execute NDA
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-gradient rounded-3xl p-8 border border-gray-700/50">
+                <h3 class="text-2xl font-bold mb-6 text-orange-400">Exclusive Listing Agent</h3>
+                <div class="mb-6">
+                    <div class="text-3xl font-bold mb-2">A R Business Brokers Inc.</div>
+                    <div class="text-gray-300">113-5800 Ambler Dr, Mississauga, ON L4W 4J4, Canada</div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center text-gray-300">
+                    <a href="tel:+14163337999" class="hover:text-orange-400 transition-colors">T: +1 (416) 333-7999</a>
+                    <a href="mailto:info@aldrin.ca" class="hover:text-orange-400 transition-colors">E: info@aldrin.ca</a>
+                    <a href="https://www.aldrin.ca" class="hover:text-orange-400 transition-colors">www.aldrin.ca</a>
+                </div>
+                <div class="mt-6 text-sm text-gray-400">
+                    This business is listed exclusively by A R Business Brokers. Please contact us directly for more information. Please do not reach out to management, employees or customers.
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <script>
-        // Initialize GSAP
+        // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
-        
-        // Navbar scroll effect
-        ScrollTrigger.create({
-            start: "top -80",
-            end: 99999,
-            toggleClass: {className: "bg-gray-900/95 backdrop-blur-md border-b border-gray-800", targets: "#navbar"}
-        });
-        
-        // Hero animations
-        gsap.timeline()
-            .from(".hero-text", {duration: 1, y: 100, opacity: 0, stagger: 0.2, ease: "power3.out"})
-            .from(".hero-subtitle", {duration: 1, y: 50, opacity: 0, ease: "power3.out"}, "-=0.5")
-            .from(".hero-stats > div", {duration: 0.8, y: 30, opacity: 0, stagger: 0.1, ease: "power3.out"}, "-=0.3")
-            .from(".hero-cta > button", {duration: 0.6, y: 20, opacity: 0, stagger: 0.1, ease: "power3.out"}, "-=0.2");
-        
-        // Section reveal animations
-        gsap.utils.toArray('.section-reveal').forEach(section => {
-            gsap.from(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                y: 40,
-                opacity: 0,
-                duration: 1,
-                ease: 'power3.out'
-            });
-        });
-        
-        // Counter animations
-        function animateCounters() {
-            document.querySelectorAll('[data-count]').forEach(counter => {
-                const target = parseFloat(counter.dataset.count);
-                gsap.to(counter, {
+
+        // Animate sections on scroll
+        gsap.utils.toArray('section').forEach((section) => {
+            gsap.fromTo(section, 
+                { opacity: 0, y: 50 }, 
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
                     scrollTrigger: {
-                        trigger: counter,
-                        start: 'top 85%',
-                        once: true
-                    },
+                        trigger: section,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+
+        // Number counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.count);
+                const isPercentage = counter.textContent.includes('%');
+                const isDollar = counter.textContent.includes('$');
+                
+                gsap.to(counter, {
                     textContent: target,
                     duration: 2,
-                    ease: 'power3.out',
-                    snap: { textContent: 0.1 },
+                    ease: "power2.out",
+                    snap: { textContent: 1 },
                     onUpdate: function() {
-                        counter.textContent = Math.round(this.targets()[0].textContent * 10) / 10;
+                        let value = Math.floor(this.targets()[0].textContent);
+                        if (isDollar) {
+                            counter.textContent = '$' + value.toLocaleString();
+                        } else if (isPercentage) {
+                            counter.textContent = value + '%';
+                        } else {
+                            counter.textContent = value.toLocaleString();
+                        }
+                    },
+                    scrollTrigger: {
+                        trigger: counter,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
                     }
                 });
             });
         }
-        
-        // Tab switching
-        function switchTab(tabName, element) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked button
-            element.classList.add('active');
-            
-            // Initialize charts for the active tab
-            setTimeout(() => {
-                if (tabName === 'operations' && !window.operationsChartsInitialized) {
-                    initOperationsCharts();
-                    window.operationsChartsInitialized = true;
-                }
-            }, 100);
-        }
-        
-        // Modal functions
-        function openModal(contentKey) {
-            const modalContent = getModalContent(contentKey);
-            document.getElementById('modal-body').innerHTML = modalContent;
-            document.getElementById('modal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            // Initialize any charts in the modal
-            setTimeout(() => {
-                initModalCharts(contentKey);
-            }, 100);
-        }
-        
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Close modal on escape key or background click
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-        
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') closeModal();
-        });
-        
-        // Modal content definitions
-        function getModalContent(key) {
-            const content = {
-                'revenue-growth': `
-                    <h3 class="text-2xl font-bold gradient-text mb-6">Revenue Growth Analysis</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <canvas id="modal-revenue-trend" width="300" height="200"></canvas>
-                        </div>
-                        <div class="space-y-4">
-                            <h4 class="text-lg font-semibold text-blue-400">Growth Drivers</h4>
-                            <ul class="space-y-2 text-gray-300">
-                                <li>• 2023-2024: 44.2% growth ($2.12M to $3.06M)</li>
-                                <li>• 2024-2025: 81.2% growth ($3.06M to $5.55M)</li>
-                                <li>• Contract expansion and renewal success</li>
-                                <li>• Route densification in core GTA corridors</li>
-                                <li>• Addition of year-round property services</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mt-6 p-4 bg-gray-800/50 rounded-xl">
-                        <p class="text-gray-300">The business demonstrates exceptional top-line expansion driven by disciplined route density, fleet efficiency, and strong customer retention across mission-critical sites.</p>
-                    </div>
-                `,
-                'ebitda-margin': `
-                    <h3 class="text-2xl font-bold gradient-text mb-6">EBITDA Margin Performance</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <canvas id="modal-margin-chart" width="300" height="200"></canvas>
-                        </div>
-                        <div class="space-y-4">
-                            <h4 class="text-lg font-semibold text-blue-400">Margin Evolution</h4>
-                            <ul class="space-y-2 text-gray-300">
-                                <li>• 2023: 27.3% EBITDA margin</li>
-                                <li>• 2024: 31.4% (+4.1pp improvement)</li>
-                                <li>• 2025: 31.5% (stable performance)</li>
-                                <li>• Projected 2026E-2027E: 31.7-31.9%</li>
-                                <li>• Above-market margin profile</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mt-6 p-4 bg-gray-800/50 rounded-xl">
-                        <p class="text-gray-300">Margin strength driven by self-performing model, route optimization, fleet efficiency, and disciplined cost controls throughout the platform.</p>
-                    </div>
-                `,
-                'fy2023-details': `
-                    <h3 class="text-2xl font-bold gradient-text mb-6">2023 Financial Performance</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <div class="text-center p-4 bg-gray-800/50 rounded-xl">
-                            <div class="text-2xl font-bold text-blue-400">$2,123,903</div>
-                            <div class="text-gray-400">Revenue</div>
-                        </div>
-                        <div class="text-center p-4 bg-gray-800/50 rounded-xl">
-                            <div class="text-2xl font-bold text-green-400">$578,765</div>
-                            <div class="text-gray-400">Normalized EBITDA</div>
-                        </div>
-                        <div class="text-center p-4 bg-gray-800/50 rounded-xl">
-                            <div class="text-2xl font-bold text-yellow-400">27.3%</div>
-                            <div class="text-gray-400">EBITDA Margin</div>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <h4 class="text-lg font-semibold text-blue-400">Key Characteristics</h4>
-                        <p class="text-gray-300">2023 represented the foundation year for the platform's institutionalized growth, establishing the contracted revenue base and self-performing operating model that would drive subsequent expansion.</p>
-                        <ul class="space-y-2 text-gray-300">
-                            <li>• Established 1-3 year contract structure</li>
-                            <li>• Built core GTA service corridors</li>
-                            <li>• Implemented technology-enabled dispatch</li>
-                            <li>• Achieved initial margin performance of 27.3%</li>
-                        </ul>
-                    </div>
-                `,
-                'fy2024-details': `
-                    <h3 class="text-2xl font-bold gradient-text mb-6">2024 Financial Performance</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <div class="text-center p-4 bg-gray-800/50 rounded-xl">
-                            <div class="text-2xl font-bold text-blue-400">$3,062,839</div>
-                            <div class="text-gray-400">Revenue (+44.2%)</div>
-                        </div>
-                        <div class="text-center p-4 bg-gray-800/50 rounded-xl">
-                            <div class="text-2xl font-bold text-green-400">$960,486</div>
-                            <div class="text-gray-400">Normalized EBITDA (+66.0%)</div>
-                        </div>
-                        <div class="text-center p-4 bg-gray-800/50 rounded-xl">
-                            <div class="text-2xl font-bold text-yellow-400">31.4%</div>
-                            <div class="text-gray-400">EBITDA Margin (+4.1pp)</div>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <h4 class="text-lg font-semibold text-blue-400">Growth Acceleration</h4>
-                        <p class="text-gray-300">2024 demonstrated the platform's ability to scale efficiently while improving margins, with strong contract renewals and operational optimization driving performance.</p>
-                        <ul class="space-y-2 text-gray-300">
-                            <li>• Significant revenue growth of 44.2% year-over-year</li>
-                            <li>• EBITDA margin expansion to 31.4%</li>
-                            <li>• Enhanced route density and fleet utilization</li>
-                            <li>• Strong contract renewal behaviour established</li>
-                        </ul>
-                    </div>
-                `,
-                'self-performing': `
-                    <h3 class="text-2xl font-bold gradient-text mb-6">Self-Performing Operating Model</h3>
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-4">
-                                <h4 class="text-lg font-semibold text-blue-400">Quality Control Advantages</h4>
-                                <ul class="space-y-2 text-gray-300">
-                                    <li>• Direct control over service delivery</li>
-                                    <li>• Consistent execution standards</li>
-                                    <li>• Specialized winter-first approach</li>
-                                    <li>• Dedicated fleet ownership</li>
-                                    <li>• Technology-enabled dispatch systems</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-4">
-                                <h4 class="text-lg font-semibold text-blue-400">Margin Strength Drivers</h4>
-                                <ul class="space-y-2 text-gray-300">
-                                    <li>• Elimination of subcontractor markups</li>
-                                    <li>• Optimized route density</li>
-                                    <li>• Fleet efficiency maximization</li>
-                                    <li>• Direct cost control</li>
-                                    <li>• Disciplined operational framework</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-gray-800/50 rounded-xl">
-                            <p class="text-gray-300">The self-performing model provides competitive advantages through quality control and margin strength, while summer maintenance is selectively provided to existing winter clients to support retention and reduce seasonality.</p>
-                        </div>
-                    </div>
-                `,
-                'industry-dynamics': `
-                    <h3 class="text-2xl font-bold gradient-text mb-6">Favourable Industry Dynamics</h3>
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-4">
-                                <h4 class="text-lg font-semibold text-blue-400">Market Consolidation Drivers</h4>
-                                <ul class="space-y-2 text-gray-300">
-                                    <li>• Rising insurance costs</li>
-                                    <li>• Provincial legislation requirements</li>
-                                    <li>• CapEx requirements for compliance</li>
-                                    <li>• Professional service expectations</li>
-                                    <li>• Technology investment needs</li>
-                                </ul>
-                            </div>
-                            <div class="space-y-4">
-                                <h4 class="text-lg font-semibold text-blue-400">Opportunity Creation</h4>
-                                <ul class="space-y-2 text-gray-300">
-                                    <li>• Smaller operators exiting market</li>
-                                    <li>• Consolidation opportunities</li>
-                                    <li>• Market share available for scaled platforms</li>
-                                    <li>• Professional service premium</li>
-                                    <li>• Defensible market positioning</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-gray-800/50 rounded-xl">
-                            <p class="text-gray-300">Industry dynamics are forcing smaller operators out of the market, creating consolidation opportunities for scaled, professional platforms with the capital and capabilities to meet evolving requirements.</p>
-                        </div>
-                    </div>
-                `
-            };
-            return content[key] || '<p class="text-gray-300">Content not found</p>';
-        }
-        
-        // Chart initialization
-        function initRevenueChart() {
+
+        // Revenue Chart
+        function createRevenueChart() {
             const ctx = document.getElementById('revenueChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['2023', '2024', '2025', '2026E', '2027E'],
-                    datasets: [{
-                        label: 'Revenue',
-                        data: [2123903, 3062839, 5549938, 6008754, 6562020],
-                        borderColor: '#4169E1',
-                        backgroundColor: 'rgba(65, 105, 225, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: '#4169E1',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#e2e8f0'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#0D1320',
-                            titleColor: '#e2e8f0',
-                            bodyColor: '#e2e8f0',
-                            borderColor: '#4169E1',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: function(context) {
-                                    return 'Revenue: $' + context.parsed.y.toLocaleString();
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.03)'
-                            },
-                            ticks: {
-                                color: '#94a3b8',
-                                callback: function(value) {
-                                    return '$' + (value / 1000000).toFixed(1) + 'M';
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.03)'
-                            },
-                            ticks: {
-                                color: '#94a3b8'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        function initEbitdaChart() {
-            const ctx = document.getElementById('ebitdaChart').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['2023', '2024', '2025', '2026E', '2027E'],
                     datasets: [{
+                        label: 'Revenue',
+                        data: [2123903, 3062839, 5549938, 6008754, 6562020],
+                        backgroundColor: 'rgba(255, 107, 53, 0.8)',
+                        borderColor: 'rgba(255, 107, 53, 1)',
+                        borderWidth: 2,
+                        yAxisID: 'y'
+                    }, {
                         label: 'EBITDA',
                         data: [578765, 960486, 1749196, 1904775, 2093284],
-                        backgroundColor: 'rgba(65, 105, 225, 0.8)',
-                        borderColor: '#4169E1',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        borderSkipped: false,
-                    }, {
-                        label: 'EBITDA Margin %',
-                        data: [27.3, 31.4, 31.5, 31.7, 31.9],
-                        type: 'line',
-                        borderColor: '#FFD700',
-                        backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        yAxisID: 'y1',
-                        pointBackgroundColor: '#FFD700',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 6
+                        backgroundColor: 'rgba(247, 147, 30, 0.8)',
+                        borderColor: 'rgba(247, 147, 30, 1)',
+                        borderWidth: 2,
+                        yAxisID: 'y'
                     }]
                 },
                 options: {
@@ -929,154 +509,52 @@
                     plugins: {
                         legend: {
                             labels: {
-                                color: '#e2e8f0'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#0D1320',
-                            titleColor: '#e2e8f0',
-                            bodyColor: '#e2e8f0',
-                            borderColor: '#4169E1',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: function(context) {
-                                    if (context.dataset.label === 'EBITDA') {
-                                        return 'EBITDA: $' + context.parsed.y.toLocaleString();
-                                    } else {
-                                        return 'Margin: ' + context.parsed.y + '%';
-                                    }
-                                }
+                                color: 'white',
+                                font: { family: 'Inter' }
                             }
                         }
                     },
                     scales: {
+                        x: {
+                            ticks: { color: 'white', font: { family: 'Inter' } },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        },
                         y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.03)'
-                            },
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
                             ticks: {
-                                color: '#94a3b8',
+                                color: 'white',
+                                font: { family: 'Inter' },
                                 callback: function(value) {
                                     return '$' + (value / 1000000).toFixed(1) + 'M';
                                 }
-                            }
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            grid: {
-                                drawOnChartArea: false,
                             },
-                            ticks: {
-                                color: '#FFD700',
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.03)'
-                            },
-                            ticks: {
-                                color: '#94a3b8'
-                            }
+                            grid: { color: 'rgba(255,255,255,0.1)' }
                         }
                     }
                 }
             });
         }
-        
-        function initModalCharts(contentKey) {
-            if (contentKey === 'revenue-growth') {
-                const ctx = document.getElementById('modal-revenue-trend');
-                if (ctx) {
-                    new Chart(ctx.getContext('2d'), {
-                        type: 'line',
-                        data: {
-                            labels: ['2023', '2024', '2025'],
-                            datasets: [{
-                                label: 'Growth Rate %',
-                                data: [0, 44.2, 81.2],
-                                borderColor: '#4169E1',
-                                backgroundColor: 'rgba(65, 105, 225, 0.1)',
-                                borderWidth: 3,
-                                fill: true,
-                                tension: 0.4
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: { labels: { color: '#e2e8f0' } },
-                                tooltip: {
-                                    backgroundColor: '#0D1320',
-                                    titleColor: '#e2e8f0',
-                                    bodyColor: '#e2e8f0',
-                                    borderColor: '#4169E1',
-                                    borderWidth: 1
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
-                                    ticks: { color: '#94a3b8' }
-                                },
-                                x: {
-                                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
-                                    ticks: { color: '#94a3b8' }
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-            
-            if (contentKey === 'ebitda-margin') {
-                const ctx = document.getElementById('modal-margin-chart');
-                if (ctx) {
-                    new Chart(ctx.getContext('2d'), {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['EBITDA', 'Operating Costs'],
-                            datasets: [{
-                                data: [31.5, 68.5],
-                                backgroundColor: ['#4169E1', 'rgba(255, 255, 255, 0.1)'],
-                                borderWidth: 0
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: { labels: { color: '#e2e8f0' } },
-                                tooltip: {
-                                    backgroundColor: '#0D1320',
-                                    titleColor: '#e2e8f0',
-                                    bodyColor: '#e2e8f0',
-                                    borderColor: '#4169E1',
-                                    borderWidth: 1
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-        }
-        
-        // Initialize everything when DOM is ready
+
+        // Initialize everything
         document.addEventListener('DOMContentLoaded', function() {
             animateCounters();
-            
-            // Initialize main charts
-            setTimeout(() => {
-                initRevenueChart();
-                initEbitdaChart();
-            }, 1000);
+            createRevenueChart();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
