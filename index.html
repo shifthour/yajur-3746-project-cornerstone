@@ -443,6 +443,20 @@
     </div>
 
     <script>
+        // Check if majority content is interactive
+        function checkInteractivity() {
+            const totalElements = document.querySelectorAll('*').length;
+            const interactiveElements = document.querySelectorAll('button, a, [data-modal], .cursor-pointer, .hover-lift, .table-row, canvas').length;
+            const interactivityRatio = interactiveElements / totalElements;
+            
+            console.log(`Total elements: ${totalElements}`);
+            console.log(`Interactive elements: ${interactiveElements}`);
+            console.log(`Interactivity ratio: ${(interactivityRatio * 100).toFixed(2)}%`);
+            console.log(`Majority interactive: ${interactivityRatio > 0.5 ? 'Yes' : 'No'}`);
+            
+            return interactivityRatio > 0.5;
+        }
+
         gsap.registerPlugin(ScrollTrigger);
 
         // GSAP Animations
@@ -701,6 +715,11 @@
                 scrub: 1
             },
             y: -100
+        });
+
+        // Check interactivity on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkInteractivity();
         });
     </script>
 </body>
